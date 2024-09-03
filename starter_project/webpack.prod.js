@@ -2,6 +2,8 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebPackPlugin = require("html-webpack-plugin")
 const WorkboxPlugin = require('workbox-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
     entry: './src/client/index.js',
@@ -26,8 +28,11 @@ module.exports = {
         }),
         new WorkboxPlugin.GenerateSW()
     ],
-    devServer: {
-        port: 3000,
-        allowedHosts: 'all'
-    }
+    optimization: {
+        minimizer: [new CssMinimizerPlugin(), new TerserPlugin({})],
+    },
+    // devServer: {
+    //     port: 3000,
+    //     allowedHosts: 'all'
+    // }
 }

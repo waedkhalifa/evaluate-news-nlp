@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebPackPlugin = require("html-webpack-plugin")
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
     entry: './src/client/index.js',
@@ -36,8 +37,15 @@ module.exports = {
             protectWebpackAssets: false
         })
     ],
-    devServer: {
-        port: 3000,
-        allowedHosts: 'all'
-    }
+    optimization: {
+        minimize: true,
+        minimizer: [
+         '...',
+            new CssMinimizerPlugin(),
+        ],
+      },
+    // devServer: {
+    //     port: 3000,
+    //     allowedHosts: 'all'
+    // }
 }

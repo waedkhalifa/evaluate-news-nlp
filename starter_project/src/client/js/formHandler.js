@@ -1,30 +1,48 @@
-// Replace checkForName with a function that checks the URL
-import { checkForName } from './nameChecker'
+const serverURL = 'http://localhost:8000/api';
 
-// If working on Udacity workspace, update this with the Server API URL e.g. `https://wfkdhyvtzx.prod.udacity-student-workspaces.com/api`
-// const serverURL = 'https://wfkdhyvtzx.prod.udacity-student-workspaces.com/api'
-const serverURL = 'https://localhost:8000/api'
+export async function sendToServer(formText) {
+    try {
+        const response = await fetch(serverURL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url: formText })
+        });
 
-const form = document.getElementById('urlForm');
-form.addEventListener('submit', handleSubmit);
+        if (!response.ok) {
+            throw new Error(`Error response: ${response.statusText}`);
+        }
 
-function handleSubmit(event) {
-    event.preventDefault();
+        const data = await response.json();
 
-    // Get the URL from the input field
-    const formText = document.getElementById('name').value;
+        document.getElementById("agreement").innerHTML = `Agreement: ${data.agreement}`;
+        document.getElementById("confidence").innerHTML = `Confidence: ${data.confidence}`;
+        document.getElementById("irony").innerHTML = `Irony: ${data.irony}`;
+        document.getElementById("model").innerHTML = `Model: ${data.model}`;
+        document.getElementById("score_tag").innerHTML = `Score Tag: ${data.score_tag}`;
+        document.getElementById("subjectivity").innerHTML = `Subjectivity: ${data.subjectivity}`;
 
-    // This is an example code that checks the submitted name. You may remove it from your code
-    checkForName(formText);
-    
-    // Check if the URL is valid
- 
-        // If the URL is valid, send it to the server using the serverURL constant above
-      
+    } catch (e) {
+        console.error('error', e);
+    }
 }
 
-// Function to send data to the server
+export async function handleSubmit(event) {
+    event.preventDefault();
 
-// Export the handleSubmit function
-export { handleSubmit };
+    const formText = document.getElementById('name').value;
 
+    if (!isValidUrl(formText)) {
+        console.error('Inalid', formText);
+        return;
+    }
+    await sendToServer(formText);
+}
+
+export function isValidUrl(url) {
+    try {
+        new URL(url);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
