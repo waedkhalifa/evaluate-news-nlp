@@ -14,12 +14,10 @@ export async function sendToServer(formText) {
 
         const data = await response.json();
 
-        document.getElementById("agreement").innerHTML = `Agreement: ${data.agreement}`;
-        document.getElementById("confidence").innerHTML = `Confidence: ${data.confidence}`;
-        document.getElementById("irony").innerHTML = `Irony: ${data.irony}`;
-        document.getElementById("model").innerHTML = `Model: ${data.model}`;
-        document.getElementById("score_tag").innerHTML = `Score Tag: ${data.score_tag}`;
-        document.getElementById("subjectivity").innerHTML = `Subjectivity: ${data.subjectivity}`;
+         document.getElementById("subjectivity").innerHTML = `Subjectivity: ${data.subjectivity}`;
+        document.getElementById("polarity").innerHTML = `Polarity: ${data.polarity}`;
+        document.getElementById("text").innerHTML = `Text: ${data.text}`;
+       
 
     } catch (e) {
         console.error('error', e);

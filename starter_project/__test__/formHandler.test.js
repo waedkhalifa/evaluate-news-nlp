@@ -9,12 +9,9 @@ describe("Testing the submit functionality", () => {
 
   test("Testing the handleSubmit() function", async () => {
     const sendToServer = jest.fn(async (url) => ({
-      agreement: "AgreementValue",
-      confidence: "ConfidenceValue",
-      irony: "IronyValue",
-      model: "modelValue", 
-      score_tag: "ScoreTagValue",
-      subjectivity: "SubjectivityValue'"
+      Subjectivity: "SubjectivityValue",
+      polarity: "polarityValue",
+      text: "text"
     }));
     const preventDefault = jest.fn();
     const event = { preventDefault };
